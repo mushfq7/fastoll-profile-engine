@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react';
 export default function EditProfilePage() {
   return (
     <main className="min-h-screen bg-slate-50 p-8">
