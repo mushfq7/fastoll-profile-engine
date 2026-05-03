@@ -5,9 +5,13 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Final Stage: Run the Next.js server
+# Final Stage
 FROM node:20-alpine
 WORKDIR /app
 COPY --from=builder /app ./
-EXPOSE 3000
-CMD ["npm", "start"]
+
+# Tell Selise we are using port 80
+EXPOSE 80
+
+# Force Next.js to start on port 80 and accept external connections
+CMD ["npm", "start", "--", "-p", "80", "-H", "0.0.0.0"]
