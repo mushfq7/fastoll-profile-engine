@@ -1,3 +1,5 @@
+"use client"; // <-- ADD THIS EXACT LINE AT THE VERY TOP
+
 import { useRouter } from 'next/navigation';
 import { handleLogin } from './actions';
 export default function LoginPage() {
