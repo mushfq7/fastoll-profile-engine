@@ -1,7 +1,7 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'export', // <-- ADD THIS EXACT LINE
+  // any other existing rules can stay here
 };
 
 export default nextConfig;
