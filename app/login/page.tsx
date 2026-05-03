@@ -8,7 +8,8 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8 border border-slate-100">
         <h2 className="text-2xl font-bold text-slate-900 mb-6 text-center">Welcome Back</h2>
         
-        <form action={handleLogin} className="flex flex-col gap-4">
+        <form action={async (formData) => { await handleLogin(formData); }}> 
+          className="flex flex-col gap-4"
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
             <input 
