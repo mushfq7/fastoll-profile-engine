@@ -1,27 +1,33 @@
 'use server';
 
-import { IdentityClient } from '@bloque/sdk-identity';
-
-const client = new IdentityClient({
-  clientId: process.env.NEXT_PUBLIC_SELISE_CLIENT_ID!,
-  clientSecret: process.env.SELISE_CLIENT_SECRET!,
-  baseUrl: process.env.NEXT_PUBLIC_SELISE_API_URL!,
-});
-
 export async function handleLogin(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
   try {
-    const response = await client.signIn({
-      username: email,
-      password: password,
-    });
+    const baseUrl = process.env.NEXT_PUBLIC_SELISE_API_URL || 'https://api.selise.biz';
     
-    console.log("Login Success:", response);
+    const response = await fetch(`${baseUrl}/oauth/token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: email,
+        password: password,
+        client_id: process.env.NEXT_PUBLIC_SELISE_CLIENT_ID,
+        client_secret: process.env.SELISE_CLIENT_SECRET,
+        grant_type: 'password'
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Authentication failed");
+    }
+
     return { success: true };
   } catch (error) {
-    console.error("Login Failed:", error);
-    return { success: false, error: "Invalid email or password" };
+    console.error("Login Error:", error);
+    return { success: false, error: "Invalid credentials" };
   }
 }
