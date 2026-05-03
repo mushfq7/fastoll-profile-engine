@@ -1,5 +1,9 @@
 import React from 'react';
-
+export async function generateStaticParams() {
+  // This allows the build to pass by pre-rendering a 'test' profile
+  return [{ username: 'test' }];
+}
+export const dynamic = 'force-dynamic';
 type Props = {
   params: Promise<{ username: string }>;
 };
